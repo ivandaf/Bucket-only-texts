@@ -1,0 +1,5 @@
+SELECT * FROM LuxCarsForSale; 
+SELECT * FROM CarReviews; 
+SELECT * FROM MotorcyclesForSale; 
+SELECT * FROM UsedCarsForSale; 
+SELECT * FROM VintageCarsForSale; 

@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, CheckLst, ArrayS, ToolWin, ComCtrls, XPMan, ActnMan,
-  ActnCtrls, ActnMenus, Menus, Grids, ValEdit;
+  ActnCtrls, ActnMenus, Menus, Grids, ValEdit, DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, ZConnection, DBGrids;
 
 type
   TForm1 = class(TForm)
@@ -93,6 +94,13 @@ type
     AddNewClass: TButton;
     NewClassName: TEdit;
     NewClassNameLabel: TLabel;
+    DBGrid1: TDBGrid;
+    ZConnection1: TZConnection;
+    ZQuery1: TZQuery;
+    DataSource1: TDataSource;
+    qlist: TListBox;
+    connecttodb: TButton;
+    doQuery: TButton;
 //    procedure ListBox1Click(Sender: TObject);
     procedure QuitClick(Sender: TObject);
     procedure CheckCarClick(Sender: TObject);
@@ -114,6 +122,8 @@ type
     procedure ClearLogClick(Sender: TObject);
     procedure AddNewClassClick(Sender: TObject);
     procedure AddRowColClick(Sender: TObject);
+    procedure connecttodbClick(Sender: TObject);
+    procedure doQueryClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -495,6 +505,13 @@ var
 begin
  najal:=0;
  najal2raza:=0;
+ ////////////////////////////// ## DUMIN ## //////////////////////////////
+  qlist.Items.LoadFromFile('queries.txt');
+  qlist.ItemIndex:=0;
+   ////////////////////////////// ## DUMIN ## //////////////////////////////
+
+
+
 
  /////////////////////////// ## ABRAMOV ## ////////////////////////////////
  // обозначим все файлы тут
@@ -1179,5 +1196,32 @@ SetLength( ArrDisjointClasses , ClassesMatrix.RowCount-1 , ClassesMatrix.ColCoun
 
 
 end;
+
+procedure TForm1.connecttodbClick(Sender: TObject);
+var cou: integer;
+begin
+ZConnection1.Connected:=true;
+ZQuery1.Active:=true;
+ //For cou:=1 to DBGrid1.FieldCount do
+  DBGRid1.Fields[1].DisplayWidth:=15;
+
+end;
+
+procedure TForm1.doQueryClick(Sender: TObject);
+var timequery: string;
+var cou: integer;
+
+begin
+ ZQuery1.Active:=False;
+ ZQuery1.SQL.Clear;
+ timequery:=qlist.Items[qlist.ItemIndex] ;
+ ZQuery1.SQL.Add(timequery);
+ ZQuery1.Active:=True;
+ DBGRid1.Fields[1].DisplayWidth:=15;
+ end;
+
+
+
+
 
 end.
